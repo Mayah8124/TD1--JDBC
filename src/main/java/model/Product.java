@@ -1,14 +1,15 @@
 package model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Product {
     private int id;
     private String name;
-    private double price;
+    private BigDecimal price;
     private LocalDateTime creation_datetime;
 
-    public Product(int id , String name , double price , LocalDateTime creation_datetime) {
+    public Product(int id , String name , BigDecimal price , LocalDateTime creation_datetime) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -19,7 +20,7 @@ public class Product {
         return id;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
