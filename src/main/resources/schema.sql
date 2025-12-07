@@ -9,4 +9,4 @@ CREATE TABLE Product_category (
     id INT,
     name VARCHAR(50),
     product_id INT REFERENCES Product(id)
-)
+);

@@ -7,9 +7,9 @@ INSERT INTO Product (id , name , price ,creation_datetime) VALUES
 
 INSERT INTO Product_category (id , name ,product_id) VALUES
     (1 , 'Informatique' , 1),
-    (2, 'Téléphone' , 2),
+    (2, 'Téléphonie' , 2),
     (3, 'Audio' ,3),
     (4 , 'Accessoires' , 4),
     (5 ,'Informatique' , 5),
-    (6 , 'Bureau' ,6),
-    (7 , 'Mobile' ,7)
+    (6 , 'Bureau' ,5),
+    (7 , 'Mobile' ,2);
