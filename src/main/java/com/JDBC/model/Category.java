@@ -1,4 +1,4 @@
-package model;
+package com.JDBC.model;
 
 public class Category {
     private int id;

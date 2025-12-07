@@ -1,4 +1,4 @@
-package model;
+package com.JDBC.model;
 
 import java.time.Instant;
 
