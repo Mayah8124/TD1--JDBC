@@ -3,18 +3,21 @@ package com.JDBC.controller;
 
 import com.JDBC.config.DBConnection;
 import com.JDBC.model.Category;
+import com.JDBC.model.Product;
 
 import java.sql.*;
 import java.util.*;
 
 public class DataRetriever {
 
+    private final DBConnection dbConnection = new DBConnection();
+
     public List<Category> getAllCategories(){
         List<Category> categoryList = new ArrayList<>();
 
         String sql = "SELECT id , name , product_id FROM Product_category";
 
-        try (Connection conn = DBConnection.getDBConnection();
+        try (Connection conn = dbConnection.getDBConnection();
              Statement stmnt = conn.createStatement();
              ResultSet rs = stmnt.executeQuery(sql);) {
 
@@ -32,7 +35,5 @@ public class DataRetriever {
 
         return categoryList;
     }
-
-
 
 }

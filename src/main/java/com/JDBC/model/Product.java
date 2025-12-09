@@ -31,19 +31,19 @@ public class Product {
         return category;
     }
 
-    private void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    private void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    private void setCreationDateTime(Instant creationDateTime) {
+    public void setCreationDateTime(Instant creationDateTime) {
         this.creationDateTime = creationDateTime;
     }
 
-    private void setCategory(Category category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
