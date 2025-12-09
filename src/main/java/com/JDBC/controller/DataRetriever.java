@@ -88,9 +88,11 @@ public class DataRetriever {
                 """
                     SELECT 
                         p.id AS product_id, 
-                        p.name AS prodcut_name, 
+                        p.name AS product_name, 
                         p.price AS product_price , 
-                        p.creation_datetime AS creation_datetime
+                        p.creation_datetime AS creation_datetime ,
+                        c.id AS category_id,
+                        c.name AS category_name
                     FROM Product p
                     LEFT JOIN Product_category c 
                     ON p.id = c.product_id
