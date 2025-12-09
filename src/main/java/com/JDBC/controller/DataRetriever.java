@@ -36,4 +36,47 @@ public class DataRetriever {
         return categoryList;
     }
 
+    public List<Product> getProductList(int page , int size){
+        List<Product> productList = new ArrayList<>();
+
+        String sql = "SELECT p.id , p.name , p.price , p.creation_datetime , c.name AS category_name FROM Product p " +
+                "LEFT JOIN Product_category c ON p.id = c.product_id ORDER BY p.id LIMIT ? OFFSET ?";
+
+        if (page < 1) {
+            page = 1;
+        }
+
+        int offset = (page - 1) * size;
+
+        try (Connection conn = dbConnection.getDBConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)){
+
+                 pstmt.setInt(1, size);
+                 pstmt.setInt(2, offset);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()){
+                Category category = new Category(
+                        rs.getInt("category_id"),
+                        rs.getString("category_name")
+                );
+
+                Product product = new Product(
+                        rs.getInt("product_id"),
+                        rs.getString("product_name"),
+                        rs.getTimestamp("creation_datetime").toInstant(),
+                        category
+                );
+
+                productList.add(product);
+            }
+        }
+
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return productList;
+    }
 }
