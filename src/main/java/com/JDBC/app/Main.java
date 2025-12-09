@@ -18,7 +18,7 @@ public class Main {
         List<Product> products = data.getProductList(1,3);
         for (Product product : products) {
             System.out.println(
-                    "ID: " + product.getId() + ", Name: " + product.getName() + ", Category: " + product.getCategoryName()
+                    "ID: " + product.getId() + ", Name: " + product.getName() + ", created at: " + product.getCreationDateTime() + ", Category: " + product.getCategoryName()
             );
         }
     }

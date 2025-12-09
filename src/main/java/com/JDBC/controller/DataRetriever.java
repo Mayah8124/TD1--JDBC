@@ -40,7 +40,7 @@ public class DataRetriever {
     public List<Product> getProductList(int page , int size){
         List<Product> productList = new ArrayList<>();
 
-        String sql = "SELECT p.id , p.name , p.price , p.creation_datetime , c.name AS category_name FROM Product p " +
+        String sql = "SELECT p.id AS product_id , p.name AS product_name , p.price, p.creation_datetime AS creation_datetime, c.id AS category_id , c.name AS category_name FROM Product p " +
                 "LEFT JOIN Product_category c ON p.id = c.product_id ORDER BY p.id LIMIT ? OFFSET ?";
 
         if (page < 1) {
