@@ -201,12 +201,12 @@ public class DataRetriever {
             params.add(Timestamp.from(creationMax));
         }
 
-        sql.append(" ORDER BY p.id; ");
+        sql.append(" ORDER BY p.id ");
         sql.append("LIMIT ? OFFSET ?");
 
         int offset = (page - 1) * size;
-        params.add(offset);
         params.add(size);
+        params.add(offset);
 
         try (Connection conn = dbConnection.getDBConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql.toString());
