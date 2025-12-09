@@ -6,6 +6,7 @@ import com.JDBC.model.Category;
 import com.JDBC.model.Product;
 
 import java.sql.*;
+import java.time.Instant;
 import java.util.*;
 
 public class DataRetriever {
@@ -73,6 +74,85 @@ public class DataRetriever {
             }
         }
 
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return productList;
+    }
+
+    public List<Product> getProductByCriteria(String productName, String categoryName , Instant creationMin , Instant creationMax){
+        List<Product> productList = new ArrayList<>();
+
+        StringBuilder sql = new StringBuilder(
+                """
+                    SELECT 
+                        p.id AS product_id, 
+                        p.name AS prodcut_name, 
+                        p.price AS product_price , 
+                        p.creation_datetime AS creation_datetime
+                    FROM Product p
+                    LEFT JOIN Product_category c 
+                    ON p.id = c.product_id
+                    WHERE 1=1
+                """
+        );
+
+        List<Object> params = new ArrayList<>();
+
+        if (productName != null && !productName.isBlank()) {
+            sql.append(" AND p.name ILIKE ? ");
+            params.add("%" + productName + "%");
+        }
+
+        if (categoryName != null && !categoryName.isBlank()) {
+            sql.append(" AND c.name ILIKE ? ");
+            params.add("%" + categoryName + "%");
+        }
+
+        if (creationMin != null) {
+            sql.append(" AND p.creation_datetime >= ? ");
+            params.add(Timestamp.from(creationMin));
+        }
+
+        if (creationMax != null) {
+            sql.append(" AND p.creation_datetime <= ? ");
+            params.add(Timestamp.from(creationMax));
+        }
+
+        sql.append(" ORDER BY p.id; ");
+
+        try (Connection conn = dbConnection.getDBConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
+
+            for (int i = 0; i < params.size(); i++) {
+                Object value = params.get(i);
+
+                if (value instanceof String) {
+                    pstmt.setString(i + 1, (String) value);
+                } else if (value instanceof Timestamp) {
+                    pstmt.setTimestamp(i + 1, (Timestamp) value);
+                }
+            }
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Category category = new Category(
+                        rs.getInt("category_id"),
+                        rs.getString("category_name")
+                );
+
+                Product product = new Product(
+                        rs.getInt("product_id"),
+                        rs.getString("product_name"),
+                        rs.getTimestamp("creation_datetime").toInstant(),
+                        category
+                );
+
+                productList.add(product);
+            }
+        }
         catch (SQLException e) {
             e.printStackTrace();
         }
