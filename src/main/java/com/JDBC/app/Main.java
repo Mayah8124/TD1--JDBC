@@ -27,5 +27,10 @@ public class Main {
         for (Product product : filteredProducts) {
             System.out.println(product.getId() + " , " + product.getName() + " , " + product.getCreationDateTime() + " , " + product.getCategoryName());
         }
+
+        List<Product> filteredPaginagedProducts = data.getProductsByCriteria(null , "info" , null , null, 1 , 2);
+        for (Product product : filteredPaginagedProducts) {
+            System.out.println(product.getId() + " , " + product.getName() + " , " + product.getCategoryName() + " , " + product.getCreationDateTime());
+        }
     }
 }
